@@ -8,6 +8,10 @@
 
 <br/>
 
+<img src="images/promo.png" alt="收纳管家产品宣传图" width="720"/>
+
+<br/>
+
 <img src="https://img.shields.io/badge/Kotlin-2.2.21-2E9E76?logo=kotlin&logoColor=white"/>
 <img src="https://img.shields.io/badge/Jetpack%20Compose-BOM%202025.12-2E9E76"/>
 <img src="https://img.shields.io/badge/Room-2.8.2-2E9E76"/>
