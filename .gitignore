@@ -1,0 +1,21 @@
+# Gradle
+.gradle/
+build/
+.kotlin/
+
+# 本地环境（含签名，禁止提交）
+local.properties
+keystore/
+keystore.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
