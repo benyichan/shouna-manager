@@ -96,7 +96,7 @@ fun SettingsScreen(onBack: (() -> Unit)? = null, onOpenBackup: () -> Unit = {}) 
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp),
+                .padding(start = 16.dp, end = 16.dp, bottom = 96.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             SectionCard("到期提醒") {

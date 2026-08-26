@@ -68,7 +68,7 @@ fun ExpiringScreen(onBack: (() -> Unit)? = null, onOpenItem: (Long) -> Unit) {
         } else {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 112.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 if (expired.isNotEmpty()) {
@@ -95,17 +95,18 @@ fun ExpiringScreen(onBack: (() -> Unit)? = null, onOpenItem: (Long) -> Unit) {
                     }
                 }
                 // 浪费分析（近 3 个月已处理的过期物品）
-                if (WasteAnalysis.hasAny(items)) {
-                    item {
-                        val wasteStats = WasteAnalysis.monthly(items)
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.White, androidx.compose.foundation.shape.RoundedCornerShape(18.dp))
-                                .padding(16.dp)
-                        ) {
-                            Text("浪费分析（近 3 个月）", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Amber)
-                            Spacer(Modifier.height(8.dp))
+                item {
+                    val hasWaste = WasteAnalysis.hasAny(items)
+                    val wasteStats = if (hasWaste) WasteAnalysis.monthly(items) else emptyList()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Color.White, androidx.compose.foundation.shape.RoundedCornerShape(18.dp))
+                            .padding(16.dp)
+                    ) {
+                        Text("浪费分析（近 3 个月）", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Amber)
+                        Spacer(Modifier.height(8.dp))
+                        if (hasWaste) {
                             wasteStats.forEach { m ->
                                 Row(
                                     modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
@@ -124,8 +125,15 @@ fun ExpiringScreen(onBack: (() -> Unit)? = null, onOpenItem: (Long) -> Unit) {
                                     )
                                 }
                             }
-                            Text("口径：处理时已过期的物品", fontSize = 11.sp, color = TextSecondary, modifier = Modifier.padding(top = 4.dp))
+                        } else {
+                            Text(
+                                "近 3 个月还没有浪费记录。把过期后处理掉的物品标记为已处理，会统计在这里。",
+                                fontSize = 13.sp,
+                                color = TextSecondary,
+                                modifier = Modifier.padding(vertical = 4.dp)
+                            )
                         }
+                        Text("口径：处理时已过期的物品", fontSize = 11.sp, color = TextSecondary, modifier = Modifier.padding(top = 4.dp))
                     }
                 }
             }
