@@ -33,8 +33,8 @@ android {
         applicationId = "com.shouna.manager"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.1.1"
         // 只打包主流 ARM 架构，避免 OpenCV/onnxruntime 全 ABI 导致 APK 过大
         ndk {
             abiFilters += listOf("arm64-v8a", "armeabi-v7a")
