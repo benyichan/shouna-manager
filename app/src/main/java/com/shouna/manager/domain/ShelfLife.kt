@@ -5,12 +5,12 @@ package com.shouna.manager.domain
  * 无法解析时返回 null（表示无保质期信息）。
  */
 object ShelfLife {
-    private val PATTERN = Regex("""(\d+(?:\.\d+)?)\s*(天|日|周|个月|月|年)""")
+    private val PATTERN = Regex("""(\d+(?:\.\d+)?)\s*(天|日|周|个月|月|年)(半)?""")
 
     fun parseDays(text: String?): Long? {
         if (text.isNullOrBlank()) return null
         val m = PATTERN.find(text.trim()) ?: return null
-        val value = m.groupValues[1].toDouble()
+        val value = m.groupValues[1].toDouble() + if (m.groupValues[3] == "半") 0.5 else 0.0
         return when (m.groupValues[2]) {
             "天", "日" -> (value * 1).toLong()
             "周" -> (value * 7).toLong()

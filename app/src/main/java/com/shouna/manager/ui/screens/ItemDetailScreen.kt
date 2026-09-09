@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -83,8 +84,10 @@ fun ItemDetailScreen(itemId: Long, onBack: () -> Unit, onEdit: (Long) -> Unit, o
     val zoneNameById = zones.associate { it.id to it.name }
     val subZoneNameById = subZones.associate { it.id to it.name }
     val loc = locationLabel(current.id, itemZones.groupBy { it.itemId }, zoneNameById, subZoneNameById)
+    // 「往年今日」只收往年：今年同日购买的（含今天刚买的）不算
     val pastToday = allItems
         .filter { it.id != current.id && SameDate.isSameMonthDay(it.purchaseDate, current.purchaseDate) }
+        .filter { SameDate.year(it.purchaseDate!!) < SameDate.year(current.purchaseDate!!) }
         .sortedByDescending { it.purchaseDate ?: 0L }
 
     Box(modifier = Modifier.fillMaxSize().background(Bg)) {
@@ -94,6 +97,7 @@ fun ItemDetailScreen(itemId: Long, onBack: () -> Unit, onEdit: (Long) -> Unit, o
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
+                    .navigationBarsPadding()
                     .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
@@ -114,7 +118,8 @@ fun ItemDetailScreen(itemId: Long, onBack: () -> Unit, onEdit: (Long) -> Unit, o
                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             photos.forEach { p ->
-                                val bmp = PhotoStorage.decodeThumb(PhotoStorage.loadFile(context, p.path), 300)
+                                // 缩略图按 path 记忆，避免每次重组都重复解码大图
+                                val bmp = remember(p.path) { PhotoStorage.decodeThumb(PhotoStorage.loadFile(context, p.path), 300) }
                                 if (bmp != null) {
                                     androidx.compose.foundation.Image(
                                         bitmap = bmp.asImageBitmap(),

@@ -8,6 +8,7 @@ import com.shouna.manager.data.db.dao.ItemZoneDao
 import com.shouna.manager.data.db.entity.ItemEntity
 import com.shouna.manager.data.db.entity.ItemPhotoEntity
 import com.shouna.manager.data.db.entity.ItemZoneEntity
+import com.shouna.manager.widget.WidgetSync
 import kotlinx.coroutines.flow.Flow
 
 class ItemRepository(
@@ -53,6 +54,7 @@ class ItemRepository(
     ): Long {
         val id = itemDao.insertItem(item)
         replaceRelations(id, zones, photoPaths)
+        WidgetSync.refresh(context)
         return id
     }
 
@@ -64,6 +66,7 @@ class ItemRepository(
     ) {
         itemDao.updateItem(item.copy(updatedAt = System.currentTimeMillis()))
         replaceRelations(item.id, zones, photoPaths)
+        WidgetSync.refresh(context)
     }
 
     /** 标记已处理（已食用/已丢弃/已转移），停止到期提醒 */
@@ -72,6 +75,7 @@ class ItemRepository(
         itemDao.updateItem(
             item.copy(handled = true, handledType = type, handledAt = now, updatedAt = now)
         )
+        WidgetSync.refresh(context)
     }
 
     /** 撤销处理 */
@@ -79,6 +83,7 @@ class ItemRepository(
         itemDao.updateItem(
             item.copy(handled = false, handledType = null, handledAt = null, updatedAt = System.currentTimeMillis())
         )
+        WidgetSync.refresh(context)
     }
 
     /** 删除物品：删照片文件、照片记录、位置关联、物品 */
@@ -87,6 +92,7 @@ class ItemRepository(
         itemPhotoDao.deleteByItem(item.id)
         itemZoneDao.deleteByItem(item.id)
         itemDao.deleteItem(item)
+        WidgetSync.refresh(context)
     }
 
     /** 单独删除一张照片（删文件 + 删记录） */
