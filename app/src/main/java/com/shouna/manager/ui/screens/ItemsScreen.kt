@@ -125,7 +125,7 @@ fun ItemsScreen(onAdd: () -> Unit, onOpenItem: (Long) -> Unit) {
                 }
             } else {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().navigationBarsPadding(),
                     contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 96.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
@@ -144,7 +144,11 @@ fun ItemsScreen(onAdd: () -> Unit, onOpenItem: (Long) -> Unit) {
             onClick = onAdd,
             containerColor = Primary,
             contentColor = Color.White,
-            modifier = Modifier.align(Alignment.BottomEnd).padding(end = 20.dp, bottom = 88.dp)
+            // 底部 TabBar 高度 = 系统导航栏 inset + ~63dp 自身内容，FAB 先让过 inset 再留 88dp，任何导航模式下都不被压住
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .navigationBarsPadding()
+                .padding(end = 20.dp, bottom = 88.dp)
         ) {
             Icon(Icons.Filled.Add, contentDescription = "添加物品")
         }
