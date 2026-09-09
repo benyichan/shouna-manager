@@ -338,7 +338,7 @@
 <header class="hero" id="top">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <span class="hero-eyebrow"><span class="dot"></span>本地优先 · 完全离线 · 免费开源</span>
+      <span class="hero-eyebrow"><span class="dot"></span>本地优先 · 完全离线 · 免费开源 · v0.1.1</span>
       <h1>收纳管家<br>把每件东西<br><em>放对地方</em></h1>
       <p class="hero-sub">物品归档、临期提醒、补货清单。<strong>到期前提醒你，用完前提醒你补货</strong>——家里囤了什么、放在哪里、还能用多久，打开就知道。</p>
       <div class="hero-btns">
@@ -418,6 +418,7 @@
     <span>免费开源</span>
     <span>无广告</span>
     <span>无账号</span>
+    <span>v0.1.1 · 全界面适配 Android 15+</span>
   </div>
 </div>
 
@@ -531,6 +532,27 @@
         <h4>自动备份</h4>
         <p>每周自动备份到指定目录，支持手动备份与恢复。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 真实界面（v0.1.1 真机截图） -->
+<style>
+  .shots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px}
+  .shot{background:#fff;border:1.5px solid rgba(47,70,61,.9);border-radius:26px;padding:10px;box-shadow:0 18px 44px rgba(31,122,91,.14);margin:0}
+  .shot img{width:100%;display:block;border-radius:18px}
+  .shot figcaption{font-size:13px;font-weight:600;color:var(--ink-soft);text-align:center;padding:10px 0 4px}
+  @media (max-width:860px){.shots-grid{grid-template-columns:1fr;max-width:420px;margin:40px auto 0}}
+</style>
+<section id="shots" style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-kicker" data-reveal>SHOTS</div>
+    <h2 class="sec-title" data-reveal>真实界面，所见即所得</h2>
+    <p class="sec-lead" data-reveal>以下截图来自 v0.1.1 真机运行，数据是示例，界面没有任何修饰。</p>
+    <div class="shots-grid" data-reveal>
+      <figure class="shot"><img src="shots/shouna-items.png" alt="物品台账" loading="lazy"><figcaption>物品台账 · 正常 / 临期 / 已过期 一眼分清</figcaption></figure>
+      <figure class="shot"><img src="shots/shouna-zones.png" alt="区域分布" loading="lazy"><figcaption>区域分布 · 东西放在哪，打开就知道</figcaption></figure>
+      <figure class="shot"><img src="shots/shouna-expiring.png" alt="临期清单" loading="lazy"><figcaption>临期清单 · 到期三档提醒 + 浪费分析</figcaption></figure>
     </div>
   </div>
 </section>
